@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	 <logger name="com.xxx.firstboot.mapper" level="DEBUG"></logger>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
+			by default -->
+		<encoder>
+			<pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{35}-%msg %n
+			</pattern>
+		</encoder>
+	</appender>
+	<appender name="info"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<prudent>true</prudent>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>/home/logs/mutidata/info-%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<!-- keep 30 days' worth of history capped at 3GB total size -->
+			<maxHistory>30</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20}-%msg %n
+			</pattern>
+		</encoder>
+		<!-- <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+	    	<level>DEBUG</level>
+	 	 </filter> -->
+	</appender>
+	<appender name="error"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<prudent>true</prudent>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>/home/logs/mutidata/error-%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<!-- keep 30 days' worth of history capped at 3GB total size -->
+			<maxHistory>30</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20}-%msg %n
+			</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter"> 
+	    	  <!-- 设置过滤级别 -->
+            <level>ERROR</level>
+            <!-- 用于配置符合过滤条件的操作 -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 用于配置不符合过滤条件的操作 -->
+            <onMismatch>DENY</onMismatch>   
+	 	 </filter>
+	</appender>
+	
+	<root level="debug">
+		<appender-ref ref="info" /> 
+		<appender-ref ref="error" />
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>
